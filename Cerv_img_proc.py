@@ -17,4 +17,3 @@ for type_dir in type_dir_list:
             continue
         else:
             img = Image.open(os_path.join(type_dir, img_dir))
-            print()
