@@ -1,8 +1,6 @@
-import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import PIL.Image as Image
 import numpy as np
-# from os import *
 import os.path as os_path
 import os as os
 
