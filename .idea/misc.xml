@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.5.2 virtualenv at ~/.virtualenvs/env_py3" project-jdk-type="Python SDK" />
-  <component name="TerminalProjectOptionsProvider">
-    <option name="myStartingDirectory" value="$PROJECT_DIR$/.." />
-  </component>
   <component name="masterDetails">
     <states>
       <state key="ScopeChooserConfigurable.UI">
