@@ -1,4 +1,5 @@
 EVENT_DIR = '/home/elijha/PycharmProjects/Cervix_Classification_GAN/Events/4_6'
+TRAIN_IMG_DIR = '/home/elijha/Documents/Data/Cervix/train_converted'
 
 BATCH_SIZE = 64
 

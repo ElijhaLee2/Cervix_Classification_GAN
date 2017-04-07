@@ -28,5 +28,5 @@ with tf.Session() as sess:
 
 
 """
-结论：tensorboard把[min,max]线性映射到[0,1]，然后将图片中的最大值作为白，最小值作为黑
+结论：tensorboard把图片像素从[min,max]线性映射到[0,1]，然后将最大值作为白，最小值作为黑
 """

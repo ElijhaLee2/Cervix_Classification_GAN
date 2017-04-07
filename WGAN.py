@@ -8,10 +8,10 @@ file_list = os.listdir(EVENT_DIR)
 for file in file_list:
     os.remove(os.path.join(EVENT_DIR, file))
 
-mnist = input_data.read_data_sets('MNIST_data')
+# 将数据集读入内存
 
 # 生成假图片
-z_ph = tf.placeholder(tf.float32, shape=[batch_size, z_dim], name='z_ph')
+z_ph = tf.placeholder(tf.float32, shape=[BATCH_SIZE, 3584, 3584, 3], name='z_ph')
 with tf.variable_scope('generator'):
     g_z = generator(z_ph)
 
