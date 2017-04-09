@@ -4,7 +4,7 @@ import numpy as np
 import os.path as os_path
 import os as os
 
-IMAGE_OUT_PATH = 'MNIST'
+IMAGE_OUT_PATH = '/home/elijha/Documents/Data/MNIST'
 
 for i in range(10):
     # 将int转为string要用str()
@@ -12,8 +12,7 @@ for i in range(10):
     if not os_path.isdir(num_path):
         os.mkdir(num_path)
 
-
-mnist = input_data.read_data_sets('MNIST_data')
+mnist = input_data.read_data_sets('/home/elijha/PycharmProjects/WGAN/MNIST_data')
 # images(看作是矩阵)是一个ndarray对象, 同时也是一个list(还有与这个list并列的其他ndarray的属性, 比如dtype, max, min, shape, size), list的每个元素是一行;
 # ndarray的每行(看作是向量)是一个ndarray对象, 同时也是一个list(还有其他ndarray属性, 同前), list的每个元素是一个数(float32对象, 也有多种属性)
 images = mnist.train.images

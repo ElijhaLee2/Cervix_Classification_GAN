@@ -1,16 +1,19 @@
 EVENT_DIR = '/home/elijha/PycharmProjects/Cervix_Classification_GAN/Events/4_6'
-TRAIN_IMG_DIR = '/home/elijha/Documents/Data/Cervix/train_converted'
+SAVE_PATH = '/home/elijha/PycharmProjects/Cervix_Classification_GAN/Saves'
 
-BATCH_SIZE = 64
+CERVIX_TRAIN_IMG_DIR = '/home/elijha/Documents/Data/Cervix/train_converted'
+MNIST_TRAIN_IMG_DIR = '/home/elijha/Documents/Data/MNIST'
 
-# Generator
+CERVIX_IMG_SIZE = 448
+MNIST_IMG_SIZE = 28
 
-GEN_CONV1_CHANNEL_NUM = 100
-GEN_CONV2_CHANNEL_NUM = 100
-GEN_CONV3_CHANNEL_NUM = 100
-GEN_CONV4_CHANNEL_NUM = 100
-GEN_CONV5_CHANNEL_NUM = 100
-GEN_CONV6_CHANNEL_NUM = 100
-GEN_CONV7_CHANNEL_NUM = 100
+CLIP = 0.02
+N_CRITIC_1 = 100
+N_CRITIC_2 = 10
 
-GEN_FILTER_SIZE = 4
+BATCH_SIZE = 60
+
+WRITE_SUMMARY_STEP = 10
+SAVE_STEP = 200
+DISPLAY_STEP = 1
+
