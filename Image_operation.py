@@ -8,7 +8,7 @@ import time as time
 
 
 class ImageBatchManager:
-    def __init__(self, img_dir, type):
+    def __init__(self, img_dir, type, batch_size):
         self.cervixImageReader = ImageReader(4 * 1024 * 1024 * 1024, img_dir, type)
 
         self.imgs = self.cervixImageReader.read_images()
@@ -19,7 +19,7 @@ class ImageBatchManager:
         self.img_read_count = 0
         self.epoch = 0
 
-        self.batch_size = BATCH_SIZE
+        self.batch_size = batch_size
 
     def get_batch(self):
         img_count = 0

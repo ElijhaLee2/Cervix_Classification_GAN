@@ -1,4 +1,4 @@
-from Image_Operate import *
+from Image_operation import *
 from HyperParam import *
 
 reader = ImageBatchManager(MNIST_TRAIN_IMG_DIR,'1')
