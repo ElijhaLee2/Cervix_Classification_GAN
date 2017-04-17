@@ -48,7 +48,7 @@ def critic(image):
                     normalizer_fn=ly.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02))
     # 4, 512
 
-    net = tf.reshape(net, shape=[batch_size, 4 * 4 * 512])
+    net = tf.reshape(net, shape=[BATCH_SIZE, 4 * 4 * 512])
 
     # 4*4*512 = 8196
     net = ly.fully_connected(net, 1024, activation_fn=leaky_relu, normalizer_fn=ly.batch_norm,
