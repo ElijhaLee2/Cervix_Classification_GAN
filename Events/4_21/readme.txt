@@ -1,0 +1,1 @@
+把Gen改成了AutoEncoder结构

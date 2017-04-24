@@ -1,8 +1,9 @@
-from InceptionResnetV1_model import *
-from Image_operation import *
-import tensorflow.contrib.layers as ly
 import numpy as np
 import tensorflow as tf
+import tensorflow.contrib.layers as ly
+
+from Image_operation import *
+from other_code.InceptionResnetV1_model import *
 
 cer_batch_mngr = ImageBatchManager(CERVIX_TRAIN_IMG_DIR,'Type_1')
 ph = tf.placeholder(tf.float32, shape=[batch_size, CERVIX_IMG_SIZE, CERVIX_IMG_SIZE, 3])

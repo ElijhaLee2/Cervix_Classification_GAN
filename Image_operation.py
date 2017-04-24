@@ -87,7 +87,7 @@ class ImageReader:
 
         img_count = 0
 
-        print('(' + str(time.time()) + ') start reading image from disk', end='...' )
+        print('(' + str(time.time()) + ') start reading image from:'+self.train_img_dir, end=' ...' )
         while img_count < self.max_img_num:
             img = Image.open(os_path.join(self.type_dir, self.img_list[self.current_img_index]))
             self.imgs.append(np.array(img))
