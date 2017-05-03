@@ -10,16 +10,9 @@ def leaky_relu(x, leak=0.3, name="lrelu"):
         f2 = 0.5 * (1 - leak)
         return f1 * x + f2 * abs(x)
 
-OPTIMIZER_SUMMARIES = [
-    "learning_rate",
-    "loss",
-    "gradients",
-    "gradient_norm",
-]
 
-
-def get_optimizers(fake, real, learning_rate, isWGAN):
-    if isWGAN:
+def get_optimizers(fake, real, learning_rate):
+    if IS_WGAN:
         return _get_optimizers_WGAN(fake, real, learning_rate)
     else:
         return _get_optimizers_GAN(fake, real, learning_rate)
@@ -53,8 +46,8 @@ def _get_optimizers_GAN(scores_g_z, scores_x, learning_rate):
     loss_gen = tf.reduce_mean(tf.log(1-scores_g_z))
 
     # global_step
-    global_step_d = tf.Variable(initial_value=0, trainable=False)
-    global_step_g = tf.Variable(initial_value=0, trainable=False)
+    global_step_d = tf.Variable(initial_value=0, trainable=False, name='global_step_d')
+    global_step_g = tf.Variable(initial_value=0, trainable=False, name='global_step_g')
     # vars
     vars_d = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='discriminator')
     vars_g = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='generator')
@@ -66,3 +59,4 @@ def _get_optimizers_GAN(scores_g_z, scores_x, learning_rate):
                               variables=vars_g,
                               name='optm_g',summaries=OPTIMIZER_SUMMARIES)
     return optm_d, optm_g
+

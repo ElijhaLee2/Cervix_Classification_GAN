@@ -81,7 +81,7 @@ def generator(input_tensor):
     return net
 
 
-def discriminator(image, isWGAN):
+def discriminator(image):
     # 28, 1
     net = ly.conv2d(image, num_outputs=64, kernel_size=3, stride=2, activation_fn=leaky_relu,
                     normalizer_fn=ly.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=STDDEV))
@@ -112,7 +112,7 @@ def discriminator(image, isWGAN):
                              weights_initializer=tf.random_normal_initializer(stddev=STDDEV))
     # 1024
     score = ly.fully_connected(net, 1,
-                               activation_fn=None if isWGAN else tf.nn.sigmoid,
+                               activation_fn=None if IS_WGAN else tf.nn.sigmoid,
                                normalizer_fn=None,
                                weights_initializer=tf.random_normal_initializer(stddev=STDDEV))
     # 1

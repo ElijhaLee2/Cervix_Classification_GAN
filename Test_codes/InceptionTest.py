@@ -5,7 +5,7 @@ import tensorflow.contrib.layers as ly
 from Image_operation import *
 from other_code.InceptionResnetV1_model import *
 
-cer_batch_mngr = ImageBatchManager(CERVIX_TRAIN_IMG_DIR,'Type_1')
+cer_batch_mngr = _ImageBatchManager(CERVIX_TRAIN_IMG_DIR, 'Type_1')
 ph = tf.placeholder(tf.float32, shape=[batch_size, CERVIX_IMG_SIZE, CERVIX_IMG_SIZE, 3])
 ph2 = tf.placeholder(tf.float32, shape=[batch_size, 1792])
 res = inception_resnet_v1(ph)

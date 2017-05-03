@@ -1,7 +1,7 @@
-from GAN_models import *
-from Image_operation import *
-from other_functions import *
 import os
+
+from Model.Discriminator import *
+from other_functions import *
 
 os.popen('killall tensorboard')
 file_list = os.listdir(EVENT_DIR)
@@ -9,8 +9,8 @@ for file in file_list:
     os.remove(os.path.join(EVENT_DIR, file))
 
 # 将数据集读入内存
-cer_batch_mngr = ImageBatchManager(CERVIX_TRAIN_IMG_DIR,'Type_1', BATCH_SIZE)
-mnist_batch_mngr = ImageBatchManager(MNIST_TRAIN_IMG_DIR,'1',BATCH_SIZE)
+cer_batch_mngr = _ImageBatchManager(CERVIX_TRAIN_IMG_DIR, 'Type_1', BATCH_SIZE)
+mnist_batch_mngr = _ImageBatchManager(MNIST_TRAIN_IMG_DIR, '1', BATCH_SIZE)
 
 # 把cervix转为mnist
 cer_ph = tf.placeholder(tf.float32, shape=[BATCH_SIZE, CERVIX_IMG_SIZE, CERVIX_IMG_SIZE, 3], name='cer_ph')
@@ -30,24 +30,24 @@ mnist_ph = tf.placeholder(tf.float32, shape=[BATCH_SIZE, MNIST_IMG_SIZE, MNIST_I
 mnist_img_tensor = mnist_ph / MAX_PIXEL_VALUE
 mnist_img_tensor = tf.expand_dims(mnist_img_tensor,axis=3)
 
-# 得到fw的评分
+# 得到score的评分
 with tf.name_scope('discriminator_fake'):
     with tf.variable_scope('discriminator'):
-        score_g_mnist = discriminator(g_mnist,False)
+        score_g_mnist = discriminator(g_mnist,IS_WGAN)
 with tf.name_scope('discriminator_real'):
     with tf.variable_scope('discriminator', reuse=True):
-        score_mnist = discriminator(mnist_img_tensor,False)
+        score_mnist = discriminator(mnist_img_tensor,IS_WGAN)
 
 # 梯度下降
-optm_c, optm_g = get_optimizers(score_g_mnist, score_mnist, 0.001, False)
+optm_c, optm_g = get_optimizers(score_g_mnist, score_mnist, 0.001, IS_WGAN)
 
 # 可视化
 sum_g_mnist = tf.summary.image('g_mnist', g_mnist, max_outputs=BATCH_SIZE)
 sum_image_fake = tf.summary.histogram('image_fake', g_mnist)
 sum_image_real = tf.summary.histogram('image_real', mnist_img_tensor)
 
-sum_fw_g_mnist = tf.summary.scalar('fw_g_mnist', tf.reduce_mean(score_g_mnist))
-sum_fw_mnist = tf.summary.scalar('fw_mnist', tf.reduce_mean(score_mnist))
+sum_score_g_mnist = tf.summary.scalar('score_g_mnist', tf.reduce_mean(score_g_mnist))
+sum_score_mnist = tf.summary.scalar('score_mnist', tf.reduce_mean(score_mnist))
 
 merge_all = tf.summary.merge_all()
 
@@ -87,18 +87,16 @@ with tf.Session(config=config) as sess:
         mnist_batch = mnist_batch_mngr.get_batch()
         if flag_write_summary:
             _, merge = sess.run([optm_g, merge_all], feed_dict={cer_ph: cer_batch, mnist_ph: mnist_batch})
-            # _, merge = sess.run([fw_g_mnist, merge_all], feed_dict={cer_ph: cer_batch, mnist_ph: mnist_batch})
             file_writer.add_summary(merge, global_step=global_step)
             file_writer.flush()
         else:
             sess.run(optm_g, feed_dict={cer_ph: cer_batch, mnist_ph: mnist_batch})
-            # sess.run(fw_g_mnist, feed_dict={cer_ph: cer_batch, mnist_ph: mnist_batch})
 
         if global_step % DISPLAY_STEP == 0:
             print("Step:" + str(global_step) + '\tfinished!')
 
         if global_step % save_step == 0:
-            saver.save(sess, SAVE_PATH+'/wgan_cervix.cpkt', global_step=global_step)
+            saver.save(sess, SAVE_PATH+'/cervix.cpkt', global_step=global_step)
             print('Saved! Step: '+ str(global_step))
 
         global_step += 1
