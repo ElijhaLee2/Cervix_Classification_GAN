@@ -1,11 +1,13 @@
-EVENT_DIR = '/home/elijha/PycharmProjects/Cervix_Classification_GAN/Events/4_24'
-SAVE_PATH = '/home/elijha/PycharmProjects/Cervix_Classification_GAN/Saves/4_24'
+EVENT_DIR = '/home/elijha/PycharmProjects/Cervix_Classification_GAN/Events/5_9'
+SAVE_PATH = '/home/elijha/PycharmProjects/Cervix_Classification_GAN/Saves/5_9'
 
 CERVIX_TRAIN_IMG_DIR = '/home/elijha/Documents/Data/Cervix/train_converted'
 MNIST_TRAIN_IMG_DIR = '/home/elijha/Documents/Data/MNIST'
 
 CERVIX_IMG_SIZE = 224
 MNIST_IMG_SIZE = 28
+
+# TYPE_NUM = 1
 
 MAX_PIXEL_VALUE = 255.0
 BATCH_SIZE = 64
@@ -17,12 +19,12 @@ IS_WGAN = True
 TOTAL_CERVIX_BUFF_SIZE_GB = 4
 TOTAL_MNIST_BUFF_SIZE_GB = 2
 
-LEARNIGN_RATE = 0.01
+LEARNIGN_RATE = 0.005
 
 if IS_WGAN:
     CLIP = 0.02
     N_DISC_1 = 100
-    N_DISC_2 = 10
+    N_DISC_2 = 20
     WRITE_SUMMARY_STEP_1 = 1
     WRITE_SUMMARY_STEP_2 = 20
     SAVE_STEP_1 = 50

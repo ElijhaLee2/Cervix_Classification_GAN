@@ -6,9 +6,9 @@ from OptimizerGenerator import *
 
 # 关闭tensorboard, 清空Event log
 os.popen('killall tensorboard')
-file_list = os.listdir(EVENT_DIR)
-for file in file_list:
-    os.remove(os.path.join(EVENT_DIR, file))
+# file_list = os.listdir(EVENT_DIR)
+# for file in file_list:
+#     os.remove(os.path.join(EVENT_DIR, file))
 
 # ImageProvider
 mnistProvider = ImageProvider(MNIST_TRAIN_IMG_DIR, ['0', '1', '4'], BATCH_SIZE, TOTAL_MNIST_BUFF_SIZE_GB)
@@ -58,9 +58,9 @@ dis_2_optimizer = DiscriminatorOpimizer(discriminator_2, LEARNIGN_RATE, 'D_2_opt
 
 # Merge
 merge_g = tf.summary.merge(generator.summaries + generator_optimizer.summaries)
-merge_d_0 = tf.summary.merge(dis_0_optimizer.summaries)
-merge_d_1 = tf.summary.merge(dis_1_optimizer.summaries)
-merge_d_2 = tf.summary.merge(dis_2_optimizer.summaries)
+merge_d_0 = tf.summary.merge(discriminator_0.summary+dis_0_optimizer.summaries)
+merge_d_1 = tf.summary.merge(discriminator_1.summary+dis_1_optimizer.summaries)
+merge_d_2 = tf.summary.merge(discriminator_2.summary+dis_2_optimizer.summaries)
 
 # -------------------
 saver = tf.train.Saver(var_list=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))
@@ -71,6 +71,7 @@ config.gpu_options.allow_growth = True
 
 with tf.Session(config=config) as sess:
     sess.run(tf.global_variables_initializer())
+    saver.restore(sess,'/home/elijha/PycharmProjects/Cervix_Classification_GAN/Saves/4_24/BigGun.save-400')
     file_writer = tf.summary.FileWriter(EVENT_DIR, graph=sess.graph)
 
     while 1:
@@ -153,7 +154,7 @@ with tf.Session(config=config) as sess:
 
         if global_step % DISPLAY_STEP == 0:
             print("Step:" + str(global_step) + '\tfinished!\n========================================')
-        if global_step % save_step == 0:
-            saver.save(sess, os.path.join(SAVE_PATH, 'BigGun.save'), global_step=global_step)
-            print('-------\n|saved|\n-------')
+        # if global_step % save_step == 0:
+        #     saver.save(sess, os.path.join(SAVE_PATH, 'BigGun.save'), global_step=global_step)
+        #     print('-------\n|saved|\n-------')
         global_step += 1
